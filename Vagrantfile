@@ -6,7 +6,8 @@
 # Please don't change it unless you know what you're doing.
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "debian/stretch64"
+  config.vm.hostname = "Uncle"
   
   # To manually check for box updates, run `vagrant box outdated`
   config.vm.box_check_update = false
@@ -22,10 +23,10 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "10.10.10.20"
   
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
-#  config.vm.synced_folder "../code", "/var/www/code", type: "virtualbox", mount_options: ["dmode=777,fmode=777"]
-#  config.vm.synced_folder "./sites-enabled", "/etc/nginx/sites-enabled", type: "virtualbox", mount_options: ["dmode=777,fmode=777"]
+  config.vm.synced_folder "../uncle-src", "/var/www/uncle", type: "virtualbox", mount_options: ["dmode=777,fmode=777"]
+  config.vm.synced_folder "./nginx-sites-enabled", "/etc/nginx/sites-enabled", type: "virtualbox", mount_options: ["dmode=777,fmode=777"]
 
   config.vm.provision :shell, :path => "./provision.sh"
-#  config.vm.provision :shell, :inline => "sudo service nginx restart", :run => "always"
+  config.vm.provision :shell, :inline => "sudo service nginx restart", :run => "always"
   
 end
